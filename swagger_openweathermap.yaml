@@ -1,0 +1,197 @@
+swagger: "2.0"
+host: localhost.weather
+info:
+  title: "OpenWeatherMap API"
+  description: "Get current weather, daily forecast for 16 days, and 3-hourly forecast 5 days for your city. Helpful stats, graphics, and this day in history charts are available for your reference. Interactive maps show precipitation, clouds, pressure, wind around your location stations. Data is available in JSON, XML, or HTML format. **Note**: This sample Swagger file covers the `current` endpoint only from the OpenWeatherMap API. <br/><br/> **Note**: All parameters are optional, but you must select at least one parameter. Calling the API by city ID (using the `id` parameter) will provide the most precise location results."
+  version: "2.5.2"
+  termsOfService: "https://openweathermap.org/terms"
+  contact:
+    name: "OpenWeatherMap API"
+    url: "https://openweathermap.org/api"
+    email: "some_email@gmail.com"
+  license:
+    name: "CC Attribution-ShareAlike 4.0 (CC BY-SA 4.0)"
+    url: "https://openweathermap.org/price"
+schemes:
+  - "http"
+
+paths:
+  /forecast:
+    get:
+      summary: Find weather conditions
+      description: Returns a list of weather conditions
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/weatherForecast"
+        "404":
+          $ref: '#/responses/NotFound'
+
+responses:
+  NotFound:
+    description: Not found response
+    schema:
+      $ref: "#/definitions/error"
+
+definitions:
+  error:
+    type: object
+    title: Weather not found
+    required:
+      - code
+      - message
+    description: Error message
+    properties:
+      code:
+        type: string
+        description: Service-specific error code
+      message:
+        type: string
+        description: A descriptive error message
+  weatherForecast:
+    type: object
+    properties:
+      cod:
+        type: string
+      message:
+        type: integer
+      cnt:
+        type: integer
+      list:
+        type: array
+        items:
+          $ref: "#/definitions/weatherMetrics"
+      city:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          coord:
+            type: object
+            properties:
+              lat:
+                type: number
+              lon:
+                type: number
+          country:
+            type: string
+          population:
+            type: integer
+          timezone:
+            type: integer
+          sunrise:
+            type: integer
+          sunset:
+            type: integer
+        required:
+          - name
+    required:
+      - cod
+      - message
+      - cnt
+      - list
+      - city
+
+  weatherMetrics:
+    type: object
+    properties:
+      dt:
+        type: integer
+        description: Timestamp of data, unix, UTC
+      main:
+        $ref: '#/definitions/main'
+      weather:
+        type: array
+        items:
+          $ref: '#/definitions/weather'
+      clouds:
+        $ref: '#/definitions/clouds'
+      wind:
+        $ref: '#/definitions/wind'
+      visibility:
+        type: integer
+      pop:
+        type: number
+      rain:
+        type: object
+        properties:
+          3h:
+            type: number
+      sys:
+        type: object
+        properties:
+          pod:
+            type: string
+      dt_txt:
+        type: string
+    required:
+      - main
+      - wind
+  main:
+    type: object
+    properties:
+      temp:
+        type: number
+        description: Temperature in Kelvin
+      feels_like:
+        type: number
+        description: Temperature. This temperature parameter accounts for the human perception of weather
+      temp_min:
+        type: number
+        description: Minimum temperature at the moment. This is minimal currently observed temperature
+      temp_max:
+        type: number
+        description: Maximum temperature at the moment. This is maximal currently observed temperature
+      pressure:
+        type: integer
+        description: Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
+      sea_level:
+        type: integer
+      grnd_level:
+        type: integer
+      humidity:
+        type: integer
+        description: Humidity, %
+      temp_kf:
+        type: integer
+    required:
+      - temp_min
+      - temp_max
+      - humidity
+  weather:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Weather condition id
+      main:
+        type: string
+        description: Group of weather parameters (Rain, Snow, Extreme etc.)
+      description:
+        type: string
+        description: Weather condition within the group.
+      icon:
+        type: string
+        description: Weather icon id
+  clouds:
+    type: object
+    properties:
+      all:
+        type: integer
+        description: Cloudiness, %
+  wind:
+    type: object
+    properties:
+      speed:
+        type: number
+        description: Wind speed
+      deg:
+        type: integer
+        description: Wind direction, degrees
+    required:
+      - speed

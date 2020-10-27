@@ -1,0 +1,81 @@
+swagger: "2.0"
+info:
+  title: "Weather Service"
+  description: "This is the service that monitors weather forecasts for specific locations."
+  version: "0.0.1"
+  termsOfService: "http://swagger.io/terms/"
+basePath: "/"
+host: localhost.weather
+schemes:
+  - "http"
+paths:
+  /weather:
+    get:
+      summary: Find weather conditions
+      description: Returns a list of cities and its weather conditions
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/city"
+        "400":
+          $ref: '#/responses/BadRequest'
+        "500":
+          $ref: '#/responses/InternalServerError'
+        "404":
+          $ref: '#/responses/NotFound'
+
+responses:
+  BadRequest:
+    description: Bad Request
+    schema:
+      $ref: "#/definitions/error"
+
+  InternalServerError:
+    description: Internal Server Error
+    schema:
+      $ref: "#/definitions/error"
+
+  NotFound:
+    description: Not Found - The resource referenced in the request does not exist
+    schema:
+      $ref: "#/definitions/error"
+
+definitions:
+  error:
+    type: object
+    title: error
+    required:
+      - code
+      - message
+    description: Error message
+    properties:
+      code:
+        type: string
+        description: Service-specific error code
+      message:
+        type: string
+        description: A descriptive error message
+  city:
+    type: object
+    properties:
+      cityName:
+        type: string
+      weatherConditions:
+        type: array
+        items:
+          $ref: '#/definitions/weatherConditions'
+    required:
+      - cityName
+      - weatherConditions
+  weatherConditions:
+    type: object
+    properties:
+      time:
+        type: string
+      tempMin:
+        type: number
+      tempMax:
+        type: number

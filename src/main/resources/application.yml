@@ -1,0 +1,17 @@
+info:
+  app:
+    name: @project.artifactId@
+    version: @project.version@
+    description: @project.description@
+
+server:
+  port: 8089
+
+weather:
+  provider: "http://api.openweathermap.org/data/2.5/"
+  apiId: "b06d9aa73df49e6d90fb4e2b0f46d5b9"
+  locations: Helsinki,Amsterdam
+  tempLow: 0
+  tempHigh: 10
+#  3 hours
+  checkFrequency: 10800000

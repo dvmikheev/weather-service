@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="4.3">
+<file name="/Users/ha70hm/Developer/private/weather-service/src/main/kotlin/com/cloudator/weather/forecast/service/WeatherService.kt">
+	<error line="56" column="17" severity="error" message="RuntimeException is a too generic Exception. Prefer throwing specific exceptions that indicate a specific error case." source="detekt.TooGenericExceptionThrown" />
+	<error line="80" column="27" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
+</file>
+</checkstyle>

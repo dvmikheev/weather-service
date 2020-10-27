@@ -1,0 +1,5 @@
+weather:
+  locations: Helsinki
+  tempLow: 0
+  tempHigh: 10
+  checkFrequency: 5000
