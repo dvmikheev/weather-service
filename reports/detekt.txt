@@ -1,2 +1,0 @@
-TooGenericExceptionThrown - [<anonymous>] at /Users/ha70hm/Developer/private/weather-service/src/main/kotlin/com/cloudator/weather/forecast/service/WeatherService.kt:56:17 - Signature=WeatherService.kt$WeatherService$throw RuntimeException("Error happened while processing response")
-MagicNumber - [kelvinToCelsius] at /Users/ha70hm/Developer/private/weather-service/src/main/kotlin/com/cloudator/weather/forecast/service/WeatherService.kt:80:27 - Signature=WeatherService.kt$WeatherService$273
